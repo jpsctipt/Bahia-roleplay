@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bahia Roleplay</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #0a0a0a;
+      color: white;
+      overflow-x: hidden;
+      animation: fadeIn 1s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    header {
+      padding: 60px 20px 40px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 42px;
+      color: #e60000;
+      margin-bottom: 15px;
+      animation: slideDown 0.6s ease-out;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .subtitulo {
+      font-size: 18px;
+      color: #ccc;
+      max-width: 700px;
+      margin: 0 auto 30px;
+      line-height: 1.6;
+    }
+
+    .narrativa {
+      background-color: #1a1a1a;
+      margin: 30px auto;
+      padding: 25px 20px;
+      max-width: 800px;
+      border-left: 5px solid #e60000;
+      border-radius: 8px;
+      color: #ddd;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .btn-area {
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    .btn {
+      display: inline-block;
+      background: linear-gradient(to right, #e60000, #a80000);
+      color: white;
+      padding: 14px 28px;
+      font-size: 17px;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 10px;
+      margin: 10px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 12px #e60000aa;
+    }
+
+    footer {
+      margin-top: 60px;
+      padding: 20px;
+      text-align: center;
+      color: #777;
+      background-color: #111;
+      font-size: 14px;
+    }
+
+    #painel-autorizacao {
+      display: none;
+      padding: 20px;
+      background: #1a1a1a;
+      color: white;
+      margin: 20px auto;
+      max-width: 500px;
+      border: 2px solid #e60000;
+      border-radius: 10px;
+    }
+
+    #painel-autorizacao input {
+      padding: 8px;
+      width: 100%;
+      margin: 10px 0;
+    }
+
+    #painel-autorizacao button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+
+    #painel-autorizacao button:first-of-type {
+      background: green;
+      color: white;
+    }
+
+    #painel-autorizacao button:last-of-type {
+      background: red;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Bahia Roleplay</h1>
+    <p class="subtitulo">
+      Bem-vindo ao servidor que une realismo, diversão e comunidade no mundo do SA-MP.
+    </p>
+
+    <div class="narrativa">
+      Fundado com o objetivo de proporcionar uma experiência inesquecível dentro do San Andreas Multiplayer, o <strong>Bahia RP</strong> é mais que um servidor — é um estilo de vida. <br><br>
+      Com administração ativa, eventos constantes e uma comunidade acolhedora, buscamos sempre inovar e ouvir nossos jogadores para construir um ambiente justo e envolvente.
+    </div>
+
+    <div class="btn-area">
+      <a class="btn" href="discord.html">Entrar no Discord</a>
+      <a class="btn" href="suporte.html">Suporte</a>
+      <a class="btn" href="chat.html">Chat ao Vivo</a>
+    </div>
+  </header>
+
+  <div id="painel-autorizacao">
+    <h2>Painel de Autorização</h2>
+    <label for="usuario-nome">Nome do usuário:</label><br>
+    <input type="text" id="usuario-nome" placeholder="Ex: João"><br>
+
+    <button onclick="autorizarUsuario()">Autorizar</button>
+    <button onclick="revogarUsuario()">Revogar</button>
+
+    <p id="resposta-autorizacao" style="margin-top: 15px; color: #ccc;"></p>
+  </div>
+
+  <footer>
+    &copy; 2025 Bahia Roleplay. Todos os direitos reservados.
+  </footer>
+
+  <script>
+    const chaveSecreta = "meuPainel123"; // sua senha de admin
+
+    const souAdmin = localStorage.getItem("souAdmin") === "true";
+
+    if (!souAdmin) {
+      const tentativa = prompt("Digite a chave secreta do administrador:");
+      if (tentativa === chaveSecreta) {
+        localStorage.setItem("souAdmin", "true");
+        alert("Acesso concedido ao painel.");
+        document.getElementById("painel-autorizacao").style.display = "block";
+      }
+    } else {
+      document.getElementById("painel-autorizacao").style.display = "block";
+    }
+
+    function autorizarUsuario() {
+      const nome = document.getElementById("usuario-nome").value.trim();
+      if (nome) {
+        localStorage.setItem("auth_" + nome, "true");
+        document.getElementById("resposta-autorizacao").textContent = `${nome} foi autorizado com sucesso.`;
+      }
+    }
+
+    function revogarUsuario() {
+      const nome = document.getElementById("usuario-nome").value.trim();
+      if (nome) {
+        localStorage.removeItem("auth_" + nome);
+        document.getElementById("resposta-autorizacao").textContent = `${nome} teve o acesso revogado.`;
+      }
+    }
+  </script>
+</body>
+</html>
